@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:user_api/model/user.dart';
-import 'package:user_api/model/user_name.dart';
 
 class UserApi{
   static Future<List<User>> fetchUsers() async {
