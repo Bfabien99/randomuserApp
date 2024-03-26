@@ -1,3 +1,5 @@
+import 'package:user_api/model/user_name.dart';
+
 class User {
   final String gender;
   UserName name;
@@ -16,16 +18,8 @@ class User {
       required this.nat,
       required this.picture}
       );
-}
 
-class UserName{
-    final String title;
-  final String firstname;
-  final String lastname;
-
-  UserName({
-    required this.title,
-      required this.firstname,
-      required this.lastname,
-  });
+  String get fullname{
+    return '${name.title} ${name.firstname} ${name.lastname}';
+  }
 }

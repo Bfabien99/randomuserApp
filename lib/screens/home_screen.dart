@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:user_api/model/user.dart';
+import 'package:user_api/model/user_name.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,10 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.blue,
         ),
         backgroundColor: Colors.blue[100],
-        floatingActionButton: FloatingActionButton(
-          onPressed: fetchUsers,
-          child: Icon(Icons.crisis_alert),
-        ),
         body: ListView.builder(
             itemCount: users.length,
             itemBuilder: (context, index) {
@@ -42,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Image.network(user.picture),
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  title: Text('${user.name.title}. ${user.name.lastname} ${user.name.firstname}'),
+                  title: Text(user.fullname),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
