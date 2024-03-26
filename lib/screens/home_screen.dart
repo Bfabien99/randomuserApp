@@ -1,15 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
 import 'package:user_api/model/user.dart';
-import 'package:user_api/model/user_name.dart';
+import 'package:user_api/services/user_api.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -17,11 +14,16 @@ class _HomeScreenState extends State<HomeScreen> {
   List<User> users = [];
 
   @override
+  void initState() {
+    super.initState();
+    fetchUsers();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("User API"),
+          title: const Text("User API"),
           backgroundColor: Colors.blue,
         ),
         backgroundColor: Colors.blue[100],
@@ -32,12 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
               final color = user.gender == 'male' ? Colors.white : Colors.grey[100];
 
               return Container(
-                margin: EdgeInsets.only(top: 8, bottom: 8),
+                margin: const EdgeInsets.only(top: 8, bottom: 8),
                 child: ListTile(
                   tileColor: color,
                   leading: ClipRRect(
-                    child: Image.network(user.picture),
                     borderRadius: BorderRadius.circular(100),
+                    child: Image.network(user.picture),
                   ),
                   title: Text(user.fullname),
                   subtitle: Column(
@@ -55,34 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
             }));
   }
 
-  void fetchUsers() async {
-    print("fetchUsers called...");
-    const url = "https://randomuser.me/api/?results=100";
-    final uri = Uri.parse(url);
-    final res = await http.get(uri);
-    final body = res.body;
-    final json = jsonDecode(body);
-    //print(json);
-    final results = json['results'] as List<dynamic>;
-    final transformed = results.map((e) {
-      final name = UserName(
-        title: e['name']['title'],
-        firstname: e['name']['first'],
-        lastname: e['name']['last'],
-      );
-      return User(
-        gender: e['gender'],
-        name : name,
-        email: e['email'],
-        phone: e['phone'],
-        cell: e['cell'],
-        nat: e['nat'],
-        picture: e['picture']['thumbnail'],
-      );
-    }).toList();
+  Future<void> fetchUsers() async {
+    final response = await UserApi.fetchUsers();
     setState(() {
-      users = transformed;
+      users = response;
     });
-    print("fetchUsers completed!");
   }
 }
