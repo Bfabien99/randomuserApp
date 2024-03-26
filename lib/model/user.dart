@@ -1,8 +1,6 @@
 class User {
   final String gender;
-  final String title;
-  final String firstname;
-  final String lastname;
+  UserName name;
   final String email;
   final String phone;
   final String cell;
@@ -11,13 +9,23 @@ class User {
 
   User(
       {required this.gender,
-      required this.title,
-      required this.firstname,
-      required this.lastname,
+      required this.name,
       required this.phone,
       required this.email,
       required this.cell,
       required this.nat,
       required this.picture}
       );
+}
+
+class UserName{
+    final String title;
+  final String firstname;
+  final String lastname;
+
+  UserName({
+    required this.title,
+      required this.firstname,
+      required this.lastname,
+  });
 }

@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Image.network(user.picture),
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  title: Text('${user.title}. ${user.lastname} ${user.firstname}'),
+                  title: Text('${user.name.title}. ${user.name.lastname} ${user.name.firstname}'),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -68,11 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
     //print(json);
     final results = json['results'] as List<dynamic>;
     final transformed = results.map((e) {
-      return User(
-        gender: e['gender'],
+      final name = UserName(
         title: e['name']['title'],
         firstname: e['name']['first'],
         lastname: e['name']['last'],
+      );
+      return User(
+        gender: e['gender'],
+        name : name,
         email: e['email'],
         phone: e['phone'],
         cell: e['cell'],
