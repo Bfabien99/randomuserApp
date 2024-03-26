@@ -18,6 +18,19 @@ class User {
       required this.nat,
       required this.picture}
       );
+    
+    factory User.fromMap(Map<String, dynamic> e){
+      final name = UserName.fromMap(e);
+        return User(
+        gender: e['gender'],
+        name : name,
+        email: e['email'],
+        phone: e['phone'],
+        cell: e['cell'],
+        nat: e['nat'],
+        picture: e['picture']['thumbnail'],
+      );
+    }
 
   String get fullname{
     return '${name.title} ${name.firstname} ${name.lastname}';

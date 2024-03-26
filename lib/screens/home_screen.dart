@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }));
   }
 
+  // Appel de l'api pour obtenir les utilisateurs
   Future<void> fetchUsers() async {
     final response = await UserApi.fetchUsers();
     setState(() {

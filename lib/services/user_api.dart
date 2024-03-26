@@ -13,20 +13,7 @@ class UserApi{
     //print(json);
     final results = json['results'] as List<dynamic>;
     final users = results.map((e) {
-      final name = UserName(
-        title: e['name']['title'],
-        firstname: e['name']['first'],
-        lastname: e['name']['last'],
-      );
-      return User(
-        gender: e['gender'],
-        name : name,
-        email: e['email'],
-        phone: e['phone'],
-        cell: e['cell'],
-        nat: e['nat'],
-        picture: e['picture']['thumbnail'],
-      );
+      return User.fromMap(e);
     }).toList();
     return users;
   }
